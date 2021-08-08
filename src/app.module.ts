@@ -8,9 +8,19 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { DmsModule } from './dms/dms.module';
 
+import { ChannelsModule } from './channels/channels.module';
+import { WorkspacesController } from './workspaces/workspaces.controller';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+
 @Module({
-  imports: [ConfigModule.forRoot(), UsersModule, DmsModule],
-  controllers: [AppController],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    DmsModule,
+    ChannelsModule,
+    WorkspacesModule,
+  ],
+  controllers: [AppController, WorkspacesController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
