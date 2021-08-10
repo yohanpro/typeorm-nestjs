@@ -3,5 +3,5 @@ import { createParamDecorator } from '@nestjs/common';
 
 export const Token = createParamDecorator((_, ctx: ExecutionContext) => {
   const response = ctx.switchToHttp().getResponse();
-  return response.localse.jwt;
+  return response.locales.jwt;
 });
