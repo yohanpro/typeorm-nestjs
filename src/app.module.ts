@@ -11,6 +11,7 @@ import { DmsModule } from './dms/dms.module';
 import { ChannelsModule } from './channels/channels.module';
 import { WorkspacesController } from './workspaces/workspaces.controller';
 import { WorkspacesModule } from './workspaces/workspaces.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -19,6 +20,16 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
     DmsModule,
     ChannelsModule,
     WorkspacesModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DATABASE,
+      entities: [],
+      synchronize: true,
+    }),
   ],
   controllers: [AppController, WorkspacesController],
   providers: [AppService],
