@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { DmsModule } from './dms/dms.module';
-
+import * as ormconfig from './ormconfig';
 import { ChannelsModule } from './channels/channels.module';
 import { WorkspacesController } from './workspaces/workspaces.controller';
 import { WorkspacesModule } from './workspaces/workspaces.module';
@@ -20,16 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     DmsModule,
     ChannelsModule,
     WorkspacesModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DATABASE,
-      entities: [],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(ormconfig),
   ],
   controllers: [AppController, WorkspacesController],
   providers: [AppService],
