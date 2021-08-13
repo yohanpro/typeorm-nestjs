@@ -1,5 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
 import { Users } from './src/entities/Users';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,7 +14,7 @@ const config: TypeOrmModuleOptions = {
   database: process.env.DB_DATABASE,
   entities: [Users],
   autoLoadEntities: true,
-  synchronize: true,
+  synchronize: false,
   logging: true,
   keepConnectionAlive: true,
 };
