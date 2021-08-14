@@ -13,6 +13,8 @@ const config: TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: [Users],
+  migrations: [__dirname + '/src/migrations/*.ts'],
+  cli: { migrationsDir: 'src/migrations' },
   autoLoadEntities: true,
   synchronize: false,
   logging: true,
