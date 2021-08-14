@@ -23,9 +23,6 @@ export class Users {
   @Column('varchar', { name: 'password', length: 100, select: false })
   password: string;
 
-  @Column({ type: 'smallint', name: 'age' })
-  age: number;
-
   @CreateDateColumn()
   createdAt: Date;
 
