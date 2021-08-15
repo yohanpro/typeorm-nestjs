@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/entities/Users';
 import { Repository } from 'typeorm';
@@ -12,11 +12,12 @@ export class UsersService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
   ) {}
+
   async postUsers(email: string, password: string, nickname: string) {
     const user = await this.userRepository.findOne({ where: { email } });
     console.log('user', user);
     if (user) {
-      throw new HttpException('이미 있는 유저입니다.', HttpStatus.BAD_REQUEST);
+      throw new UnauthorizedException('이미 있는 유저입니다.');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
     await this.userRepository.save({

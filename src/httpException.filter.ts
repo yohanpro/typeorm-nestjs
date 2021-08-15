@@ -17,12 +17,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
       | string
       | { error: string; statusCode: 400; message: string[] };
 
-    console.log('status', status);
-    console.log('eerr', err);
+    if (typeof err !== 'string' && err.error === 'Bad Request') {
+      return response.status(status).json({
+        success: false,
+        code: status,
+        data: err.message,
+      });
+    }
     response.status(status).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
+      success: false,
+      code: status,
+      data: err,
     });
   }
 }

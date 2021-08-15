@@ -3,13 +3,17 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import { HttpExceptionFilter } from './httpException.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 const port = process.env.PORT || 8080;
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe());
+
   const config = new DocumentBuilder()
     .setTitle('Test Example')
     .setDescription('TEST API description 입니다')
