@@ -1,4 +1,5 @@
 import { UseInterceptors } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/common/decoration/user.decorator';
@@ -25,10 +26,11 @@ export class UsersController {
 
   @ApiOperation({ summary: '생성' })
   @Post()
-  createUsers(@Body() data: JoinRequestDto) {
+  async createUsers(@Body() data: JoinRequestDto) {
     const { email, password, nickname } = data;
-    this.usersService.postUsers(email, password, nickname);
+    await this.usersService.postUsers(email, password, nickname);
   }
+
   @ApiOperation({ summary: '로그인' })
   @Post('login')
   logIn(@User() user) {}
