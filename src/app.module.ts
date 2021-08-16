@@ -14,15 +14,17 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { Users } from './entities/Users';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
     DmsModule,
     ChannelsModule,
     WorkspacesModule,
     TypeOrmModule.forRoot(ormconfig),
+    TypeOrmModule.forFeature([Users]),
     AuthModule,
   ],
   controllers: [AppController, WorkspacesController],

@@ -4,6 +4,9 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import { HttpExceptionFilter } from './httpException.filter';
 import { ValidationPipe } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import passport from 'passport';
 
 const port = process.env.PORT || 8080;
 declare const module: any;
@@ -15,13 +18,28 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('Test Example')
-    .setDescription('TEST API description 입니다')
+    .setTitle('Sleact API')
+    .setDescription('Sleact 개발을 위한 API 문서입니다.')
     .setVersion('1.0')
-    .addCookieAuth('1.0')
-    .addTag('test')
+    .addCookieAuth('connect.sid')
     .build();
   const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  app.use(cookieParser());
+  app.use(
+    session({
+      resave: false,
+      saveUninitialized: false,
+      secret: process.env.COOKIE_SECRET,
+      cookie: {
+        httpOnly: true,
+      },
+    }),
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   SwaggerModule.setup('api', app, document);
   Logger.log(`Server is now runnig on ${port}`, 'Bootstarp');
 

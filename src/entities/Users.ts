@@ -25,7 +25,7 @@ export class Users {
   nickname: string;
 
   @IsString()
-  @Column('varchar', { name: 'password', length: 100, select: false })
+  @Column('varchar', { name: 'password', length: 100})
   password: string;
 
   @CreateDateColumn()
