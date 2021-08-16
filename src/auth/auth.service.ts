@@ -15,7 +15,6 @@ export class AuthService {
       where: { email },
       select: ['id', 'email', 'password'],
     });
-
     if (!user) {
       return null;
     }
