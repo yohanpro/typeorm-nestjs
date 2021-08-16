@@ -12,6 +12,8 @@ import { ChannelsModule } from './channels/channels.module';
 import { WorkspacesController } from './workspaces/workspaces.controller';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,9 +23,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ChannelsModule,
     WorkspacesModule,
     TypeOrmModule.forRoot(ormconfig),
+    AuthModule,
   ],
   controllers: [AppController, WorkspacesController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
